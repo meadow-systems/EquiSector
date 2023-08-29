@@ -18,19 +18,56 @@ public class Horse {
     private boolean isMale;
     private boolean isThoroughbred;
     private int age;
-    private int horseID;
     private Date foalDate;
     private ArrayList<Vaccination> vaccinationsList;
     private ArrayList<HealthRecord> healthRecordsList;
 
-    public HealthInfo(int horseID) {
-      this.horseID = horseID;
+//    public HealthInfo(boolean isMale) {
+//      verifyMale(isMale);
+//      this.isMale = isMale;
+//      isThoroughbred = false;
+//    }
+//
+//    public HealthInfo(boolean isMale, boolean isThoroughbred) {
+//      verifyMale(isMale);
+//      verifyThoroughbred(isThoroughbred);
+//      this.isMale = isMale;
+//      this.isThoroughbred = isThoroughbred;
+//    }
+//
+//    public HealthInfo(boolean isMale, boolean isThoroughbred, int age) {
+//      verifyMale(isMale);
+//      verifyThoroughbred(isThoroughbred);
+//      verifyAge(age);
+//      this.isMale = isMale;
+//      this.isThoroughbred = isThoroughbred;
+//      this.age = age;
+//    }
+
+    public HealthInfo(boolean isMale, boolean isThoroughbred, int age, Date foalDate) {
+      verifyAge(age);
+      verifyFoalDate(foalDate);
+      this.isMale = isMale;
+      this.isThoroughbred = isThoroughbred;
+      this.age = age;
+      this.foalDate = foalDate;
+
     }
 
-    public HealthInfo(boolean isMale, int age, boolean isThoroughbred) {
-      this.isMale = isMale;
-      this.age = age;
-      this.isThoroughbred = isThoroughbred;
+    private void verifyAge(int age) {
+      if (age <= 0) {
+        throw new IllegalArgumentException("Age cannot be below 0, and must be a valid age for horse with ID: " + horseID);
+      }
+    }
+
+    private void verifyFoalDate(Date foalDate) {
+      Date today = new Date();
+      if (foalDate.after(today)) {
+        throw new IllegalArgumentException("The foal date must be before today's date for horse with ID: " + horseID);
+      }
+      if (foalDate == null) {
+        throw new IllegalArgumentException("The foal date is null and cannot be null for horse with ID: " + horseID);
+      }
     }
 
     public boolean getIsMale() {
@@ -39,14 +76,6 @@ public class Horse {
 
     public boolean getIsThoroughbred() {
       return this.isThoroughbred;
-    }
-
-    public int getAge() {
-      return this.age;
-    }
-
-    public Date getFoalDate() {
-      return this.foalDate;
     }
   }
 
@@ -58,7 +87,7 @@ public class Horse {
    * this is good code :)
    * fix in post? NO
    * Should be good, until post! :)
-   * ok -_-
+   * ok -_- <3
    */
   public Horse() {
     this.horseID = new Random()
