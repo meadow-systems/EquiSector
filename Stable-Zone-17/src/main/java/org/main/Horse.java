@@ -12,11 +12,12 @@ import java.lang.IllegalArgumentException;
 public class Horse {
 
   /**
-   *
+   * The HealthInfo class, a subclass of Horse which contains the health information of the
+   * Horse object.
    */
   private class HealthInfo {
-    private boolean isMale;
-    private boolean isThoroughbred;
+    private final boolean isMale;
+    private final boolean isThoroughbred;
     private int age;
     private Date foalDate;
     private ArrayList<Vaccination> vaccinationsList;
@@ -54,40 +55,57 @@ public class Horse {
 
     }
 
+    /**
+     * @param age the age to verify
+     * @throws IllegalArgumentException if the age is nonsensical
+     */
     private void verifyAge(int age) {
       if (age <= 0) {
-        throw new IllegalArgumentException("Age cannot be below 0, and must be a valid age for horse with ID: " + horseID);
+        throw new IllegalArgumentException(
+            "Age cannot be below 0, and must be a valid age for horse with ID: " + horseID);
       }
     }
 
+    /**
+     * @param foalDate the foal date to verify
+     * @throws IllegalArgumentException if the foal date is null or in the future
+     */
     private void verifyFoalDate(Date foalDate) {
       Date today = new Date();
-      if (foalDate.after(today)) {
-        throw new IllegalArgumentException("The foal date must be before today's date for horse with ID: " + horseID);
-      }
+
       if (foalDate == null) {
-        throw new IllegalArgumentException("The foal date is null and cannot be null for horse with ID: " + horseID);
+        throw new IllegalArgumentException("Foal date cannot be null for horse with ID: " + horseID);
+      }
+
+      if (foalDate.after(today)) {
+        throw new IllegalArgumentException("Foal date cannot be in the future for horse with ID: " + horseID);
       }
     }
 
+    /**
+     * @return true if the Horse is male, false otherwise
+     */
     public boolean getIsMale() {
       return this.isMale;
     }
 
+    /**
+     * @return true if the Horse is a thoroughbred, false otherwise
+     */
     public boolean getIsThoroughbred() {
       return this.isThoroughbred;
     }
-  }
+  } // ... end HealthInfo subclass
 
-  private String horseName;
-  private int horseID;
-  private HealthInfo horseHealthInfo;
+  private String horseName; // name of the horse
+  private int horseID; // unique ID of the horse
+  private HealthInfo horseHealthInfo; // health information concerning the horse
+
+  // constructors
+  // TODO: Integrate HealthInfo into constructor ->  horseHealthInfo = new HealthInfo(isMale, isThoroughbred, age, foalDate)
 
   /**
-   * this is good code :)
-   * fix in post? NO
-   * Should be good, until post! :)
-   * ok -_- <3
+   * Default constructor for Horse
    */
   public Horse() {
     this.horseID = new Random()
@@ -98,52 +116,23 @@ public class Horse {
         .orElseThrow(NoSuchElementException::new);
   }
 
+  /**
+   * Constructor for Horse + name
+   * @param horseName the name of the horse
+   */
   public Horse(String horseName) {
+    super();
     this.horseName = horseName;
   }
 
-  // accessors
+  // TODO: Accessors and mutators for HealthInfo
 
   public int getHorseID() {
     return horseID;
   }
 
   /**
-   *
-   * @return
-   */
-  public String getHorseName() {
-    if (horseName == null) {
-      throw new NoSuchElementException("Horse name is null for Horse with ID: " + horseID);
-    }
-    return horseName;
-  }
-
-  /**
-   *
-   * @return
-   */
-  public HealthInfo getHorseHealthInfo() {
-    if (horseHealthInfo == null) {
-      throw new NoSuchElementException("No health info for Horse with ID: " + horseID);
-    }
-    return this.horseHealthInfo;
-  }
-
-  /**
-   *
-   * @return
-   */
-  public void setHorseName(String horseName) {
-    if (horseName.isEmpty()){
-      throw new IllegalArgumentException("The entered name is an invalid name. Please enter a valid name");
-    }
-    this.horseName = horseName;
-  }
-
-  /**
-   *
-   * @return
+   * @return a String representation of the Horse object TODO: Revise this method
    */
   public String toString() {
     if (horseName == null) {
