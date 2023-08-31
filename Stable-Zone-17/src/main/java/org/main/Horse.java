@@ -16,119 +16,152 @@ public class Horse {
    * Horse object.
    */
   private class HealthInfo {
+
     private final boolean isMale;
-    private final boolean isThoroughbred;
+    private boolean isThoroughbred;
     private int age;
     private Date foalDate;
     private ArrayList<Vaccination> vaccinationsList;
     private ArrayList<HealthRecord> healthRecordsList;
 
-//    public HealthInfo(boolean isMale) {
-//      verifyMale(isMale);
-//      this.isMale = isMale;
-//      isThoroughbred = false;
-//    }
-//
-//    public HealthInfo(boolean isMale, boolean isThoroughbred) {
-//      verifyMale(isMale);
-//      verifyThoroughbred(isThoroughbred);
-//      this.isMale = isMale;
-//      this.isThoroughbred = isThoroughbred;
-//    }
-//
-//    public HealthInfo(boolean isMale, boolean isThoroughbred, int age) {
-//      verifyMale(isMale);
-//      verifyThoroughbred(isThoroughbred);
-//      verifyAge(age);
-//      this.isMale = isMale;
-//      this.isThoroughbred = isThoroughbred;
-//      this.age = age;
-//    }
-
-    public HealthInfo(boolean isMale, boolean isThoroughbred, int age, Date foalDate) {
-      verifyAge(age);
-      verifyFoalDate(foalDate);
+    public HealthInfo(boolean isMale) {
       this.isMale = isMale;
+    }
+
+    public boolean isMale() {
+      return isMale;
+    }
+
+    public boolean isThoroughbred() {
+      return isThoroughbred;
+    }
+
+    public int getAge() {
+      return age;
+    }
+
+    public Date getFoalDate() {
+      return foalDate;
+    }
+
+    public ArrayList<Vaccination> getVaccinationsList() {
+      return vaccinationsList;
+    }
+
+    public ArrayList<HealthRecord> getHealthRecordsList() {
+      return healthRecordsList;
+    }
+
+    public void setThoroughbred(boolean isThoroughbred) {
       this.isThoroughbred = isThoroughbred;
-      this.age = age;
-      this.foalDate = foalDate;
-
     }
 
-    /**
-     * @param age the age to verify
-     * @throws IllegalArgumentException if the age is nonsensical
-     */
-    private void verifyAge(int age) {
-      if (age <= 0) {
-        throw new IllegalArgumentException(
-            "Age cannot be below 0, and must be a valid age for horse with ID: " + horseID);
+    public void setAge(int age) {
+      if (age <= 0){
+        throw new IllegalArgumentException("The age you wish to set cannot be 0 or negative.");
       }
+      this.age = age;
     }
 
-    /**
-     * @param foalDate the foal date to verify
-     * @throws IllegalArgumentException if the foal date is null or in the future
-     */
-    private void verifyFoalDate(Date foalDate) {
+    public void setFoalDate(Date foalDate) {
       Date today = new Date();
-
       if (foalDate == null) {
         throw new IllegalArgumentException("Foal date cannot be null for horse with ID: " + horseID);
       }
-
       if (foalDate.after(today)) {
         throw new IllegalArgumentException("Foal date cannot be in the future for horse with ID: " + horseID);
       }
+      this.foalDate = foalDate;
     }
 
-    /**
-     * @return true if the Horse is male, false otherwise
-     */
-    public boolean getIsMale() {
-      return this.isMale;
+    public void setVaccinationsList(ArrayList<Vaccination> vaccinationsList) {
+      if (vaccinationsList == null) {
+        throw new IllegalArgumentException("The passed in vaccinations List cannot be null.");
+      }
+      this.vaccinationsList = vaccinationsList;
     }
 
-    /**
-     * @return true if the Horse is a thoroughbred, false otherwise
-     */
-    public boolean getIsThoroughbred() {
-      return this.isThoroughbred;
+    public void setHealthRecordsList(ArrayList<HealthRecord> healthRecordsList) {
+      if(healthRecordsList == null){
+        throw new IllegalArgumentException("The passed in health records list cannot be null.");
+      }
+      this.healthRecordsList = healthRecordsList;
     }
-  } // ... end HealthInfo subclass
+
+    public void addVaccination(Vaccination vaccination) {
+      if (vaccination == null) {
+        throw new IllegalArgumentException("The passed in vaccination cannot be null.");
+      }
+      this.vaccinationsList.add(vaccination);
+    }
+
+    public void addHealthRecord(HealthRecord healthRecord){
+      if (healthRecord == null) {
+        throw new IllegalArgumentException("The passed in health record cannot be null.");
+      }
+      this.healthRecordsList.add(healthRecord);
+    }
+  }// ... end HealthInfo subclass
 
   private String horseName; // name of the horse
   private int horseID; // unique ID of the horse
   private HealthInfo horseHealthInfo; // health information concerning the horse
-
-  // constructors
-  // TODO: Integrate HealthInfo into constructor ->  horseHealthInfo = new HealthInfo(isMale, isThoroughbred, age, foalDate)
 
   /**
    * Default constructor for Horse
    */
   public Horse() {
     this.horseID = new Random()
-        .ints(1, 10000)
-        .distinct()
-        .limit(1)
-        .findFirst()
-        .orElseThrow(NoSuchElementException::new);
+            .ints(1, 10000)
+            .distinct()
+            .limit(1)
+            .findFirst()
+            .orElseThrow(NoSuchElementException::new);
   }
 
   /**
-   * Constructor for Horse + name
-   * @param horseName the name of the horse
+   * @param horseName the name of the Horse
+   * @param isMale true if male, false otherwise
    */
-  public Horse(String horseName) {
-    super();
+  public Horse(String horseName, boolean isMale) {
+    this();
     this.horseName = horseName;
+    this.horseHealthInfo = new HealthInfo(isMale);
   }
 
-  // TODO: Accessors and mutators for HealthInfo
-
+  /**
+   * Getter for the horse's ID
+   * @return the horse ID
+   */
   public int getHorseID() {
     return horseID;
+  }
+
+  /**
+   * Getter for the horse's Name
+   * @return the horse's Name
+   */
+  public String getHorseName() {
+    return this.horseName;
+  }
+
+  /**
+   * Getter for the horse's Health Info
+   * @return the horse's Name
+   */
+  public HealthInfo getHorseHealthInfo() {
+    return horseHealthInfo;
+  }
+
+  /**
+   * Setter for the horse's name
+   * @param horseName The horse's new name
+   */
+  public void setHorseName(String horseName) {
+    if (horseName == null) {
+      throw new IllegalArgumentException("Sorry buddy, you have to input something for the 🐴 name.🙁🙁🙁🙁");
+    }
+    this.horseName = horseName;
   }
 
   /**
