@@ -57,7 +57,7 @@ public class Barn {
      */
     public ArrayList<Horse> filterByThoroughbred(boolean isThorough) {
         return this.barn.values().stream()
-            .filter(objects -> objects.getValue0().getHorseHealthInfo().isThoroughbred() == isThorough)
+            .filter(objects -> objects.getValue0().isThoroughbred() == isThorough)
             .map(Pair::getValue0)
             .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -70,7 +70,7 @@ public class Barn {
      */
     public ArrayList<Horse> filterBySex(boolean isMale) {
         return this.barn.values().stream()
-            .filter(objects -> objects.getValue0().getHorseHealthInfo().isMale() == isMale)
+            .filter(objects -> objects.getValue0().isMale() == isMale)
             .map(Pair::getValue0)
             .collect(Collectors.toCollection(ArrayList::new));
     }

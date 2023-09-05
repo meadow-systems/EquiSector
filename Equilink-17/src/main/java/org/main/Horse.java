@@ -15,7 +15,7 @@ public class Horse {
    * The HealthInfo class, a subclass of Horse which contains the health information of the
    * Horse object.
    */
-  protected class HealthInfo {
+  private class HealthInfo {
 
     private boolean isMale;
     private boolean isThoroughbred;
@@ -24,95 +24,12 @@ public class Horse {
     private ArrayList<Vaccination> vaccinationsList;
     private ArrayList<HealthRecord> healthRecordsList;
 
-    public HealthInfo() {}
-
-    public HealthInfo(boolean isMale) {
-      this.isMale = isMale;
-    }
-
-    public boolean isMale() {
-      return isMale;
-    }
-
-    public boolean isThoroughbred() {
-      return isThoroughbred;
-    }
-
-    public int getAge() {
-      return age;
-    }
-
-    public Date getFoalDate() {
-      return foalDate;
-    }
-
-    public ArrayList<Vaccination> getVaccinationsList() {
-      return vaccinationsList;
-    }
-
-    public ArrayList<HealthRecord> getHealthRecordsList() {
-      return healthRecordsList;
-    }
-
-    public void setMale(boolean isMale) {
-      this.isMale = isMale;
-    }
-
-    public void setThoroughbred(boolean isThoroughbred) {
-      this.isThoroughbred = isThoroughbred;
-    }
-
-    public void setAge(int age) {
-      if (age <= 0){
-        throw new IllegalArgumentException("The age you wish to set cannot be 0 or negative.");
-      }
-      this.age = age;
-    }
-
-    public void setFoalDate(Date foalDate) {
-      Date today = new Date();
-      if (foalDate == null) {
-        throw new IllegalArgumentException("Foal date cannot be null for horse with ID: " + horseID);
-      }
-      if (foalDate.after(today)) {
-        throw new IllegalArgumentException("Foal date cannot be in the future for horse with ID: " + horseID);
-      }
-      this.foalDate = foalDate;
-    }
-
-    public void setVaccinationsList(ArrayList<Vaccination> vaccinationsList) {
-      if (vaccinationsList == null) {
-        throw new IllegalArgumentException("The passed in vaccinations List cannot be null.");
-      }
-      this.vaccinationsList = vaccinationsList;
-    }
-
-    public void setHealthRecordsList(ArrayList<HealthRecord> healthRecordsList) {
-      if(healthRecordsList == null){
-        throw new IllegalArgumentException("The passed in health records list cannot be null.");
-      }
-      this.healthRecordsList = healthRecordsList;
-    }
-
-    public void addVaccination(Vaccination vaccination) {
-      if (vaccination == null) {
-        throw new IllegalArgumentException("The passed in vaccination cannot be null.");
-      }
-      this.vaccinationsList.add(vaccination);
-    }
-
-    public void addHealthRecord(HealthRecord healthRecord){
-      if (healthRecord == null) {
-        throw new IllegalArgumentException("The passed in health record cannot be null.");
-      }
-      this.healthRecordsList.add(healthRecord);
-    }
   }// ... end HealthInfo subclass
 
   private String horseName; // name of the horse
-  private int horseID; // unique ID of the horse
+  private final int horseID; // unique ID of the horse
   private ArrayList<Client> owner; // owner(s) of the horse
-  private HealthInfo horseHealthInfo = new HealthInfo(); // health information concerning the horse
+  private HealthInfo horseHealthInfo; // health information concerning the horse
 
   /**
    * Default constructor for Horse
@@ -124,6 +41,7 @@ public class Horse {
             .limit(1)
             .findFirst()
             .orElseThrow(NoSuchElementException::new);
+    this.horseHealthInfo = new HealthInfo();
   }
 
   /**
@@ -136,7 +54,7 @@ public class Horse {
       throw new IllegalArgumentException("Sorry buddy, you have to input something for the 🐴 name.🙁🙁🙁🙁");
     }
     this.horseName = horseName;
-    this.horseHealthInfo.setMale(isMale);
+    this.horseHealthInfo.isMale = isMale;
   }
 
   /**
@@ -158,11 +76,88 @@ public class Horse {
   public ArrayList<Client> getOwner() { return this.owner; }
 
   /**
-   * Getter for the horse's Health Info
-   * @return the horse's Name
+   * @return the horse's Health info
    */
   public HealthInfo getHorseHealthInfo() {
     return this.horseHealthInfo;
+  }
+
+  public boolean isMale() {
+    return this.horseHealthInfo.isMale;
+  }
+
+  public boolean isThoroughbred() {
+    return this.horseHealthInfo.isThoroughbred;
+  }
+
+  public int getAge() {
+    return this.horseHealthInfo.age;
+  }
+
+  public void setThoroughbred(boolean isThoroughbred) {
+    this.horseHealthInfo.isThoroughbred = isThoroughbred;
+  }
+
+  public Date getFoalDate() {
+    return this.horseHealthInfo.foalDate;
+  }
+
+  public ArrayList<Vaccination> getVaccinationsList() {
+    return this.horseHealthInfo.vaccinationsList;
+  }
+
+  public ArrayList<HealthRecord> getHealthRecordsList() {
+    return this.horseHealthInfo.healthRecordsList;
+  }
+
+  public void setMale(boolean isMale) {
+    this.horseHealthInfo.isMale = isMale;
+  }
+
+  public void setAge(int age) {
+    if (age <= 0){
+      throw new IllegalArgumentException("The age you wish to set cannot be 0 or negative.");
+    }
+    this.horseHealthInfo.age = age;
+  }
+
+  public void setFoalDate(Date foalDate) {
+    Date today = new Date();
+    if (foalDate == null) {
+      throw new IllegalArgumentException("Foal date cannot be null for horse with ID: " + horseID);
+    }
+    if (foalDate.after(today)) {
+      throw new IllegalArgumentException("Foal date cannot be in the future for horse with ID: " + horseID);
+    }
+    this.horseHealthInfo.foalDate = foalDate;
+  }
+
+  public void setVaccinationsList(ArrayList<Vaccination> vaccinationsList) {
+    if (vaccinationsList == null) {
+      throw new IllegalArgumentException("The passed in vaccinations List cannot be null.");
+    }
+    this.horseHealthInfo.vaccinationsList = vaccinationsList;
+  }
+
+  public void setHealthRecordsList(ArrayList<HealthRecord> healthRecordsList) {
+    if(healthRecordsList == null){
+      throw new IllegalArgumentException("The passed in health records list cannot be null.");
+    }
+    this.horseHealthInfo.healthRecordsList = healthRecordsList;
+  }
+
+  public void addVaccination(Vaccination vaccination) {
+    if (vaccination == null) {
+      throw new IllegalArgumentException("The passed in vaccination cannot be null.");
+    }
+    this.horseHealthInfo.vaccinationsList.add(vaccination);
+  }
+
+  public void addHealthRecord(HealthRecord healthRecord){
+    if (healthRecord == null) {
+      throw new IllegalArgumentException("The passed in health record cannot be null.");
+    }
+    this.horseHealthInfo.healthRecordsList.add(healthRecord);
   }
 
   /**

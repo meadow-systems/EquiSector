@@ -41,7 +41,7 @@ public class HorseTest {
 
       // the HealthInfo subclass method
       assertDoesNotThrow(() -> {
-        horse.getHorseHealthInfo().setThoroughbred(true);
+        horse.setThoroughbred(true);
       });
 
       // TODO: add more tests for other getters and setters
