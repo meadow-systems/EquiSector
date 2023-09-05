@@ -1,3 +1,3 @@
-# Stable-Zone
+# Equilink
 
-Horses! Lots of horses!
+Horses! Lots of horses! The place to manage them!
