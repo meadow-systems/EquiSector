@@ -19,11 +19,11 @@ public class Barn {
      * Add horses to the Barn where a Barn element is a mapping from horse ID to a tuple Pair
      * of types Horse and ArrayList<Client>
      * @param horse the element to add to the Barn
-     * @throws IllegalArgumentException if the passed in horse is null
+     * @throws IllegalArgumentException if the passed in horse is not
      */
     public void addHorse(Horse horse) {
         if (horse == null) {
-            throw new IllegalArgumentException("Null horse provided for Barn#addHorse(Horse)");
+            throw new IllegalArgumentException("Don't pass in a null horsey for Barn#addHorse(Horse) pwetty pwease ÒwÓ");
         }
 
         Pair<Horse, ArrayList<Client>> tuple = Pair.with(horse, horse.getOwner());
@@ -39,7 +39,7 @@ public class Barn {
      */
     public List<Object> filterByClient(Client client) {
         if(client == null){
-            throw new IllegalArgumentException("You're dumb as rocks buddy :3");
+            throw new IllegalArgumentException("Don't pass in a null client pwettie pweese (☞ﾟヮﾟ)☞");
         }
         return barn.entrySet().stream()
             .filter(x -> x.getValue().getValue1()
@@ -51,9 +51,9 @@ public class Barn {
     /**
      * Filter the Barn by a Horse's status as a thoroughbred.
      *
-     * @param isThorough true if the horse is a thoroughbred, false otherwise
+     * @param isThorough true if the horse is a thoroughbred, false if not a thoroughbred
      * @return an ArrayList of Horses that are thoroughbreds if isThorough is true or an ArrayList
-     * of Horses that are not thoroughbreds if isThorough is falsey walsey uwu >:3
+     * of Horses that are not thoroughbreds if isThorough is false
      */
     public ArrayList<Horse> filterByThoroughbred(boolean isThorough) {
         return this.barn.values().stream()
