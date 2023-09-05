@@ -15,14 +15,16 @@ public class Horse {
    * The HealthInfo class, a subclass of Horse which contains the health information of the
    * Horse object.
    */
-  private class HealthInfo {
+  protected class HealthInfo {
 
-    private final boolean isMale;
+    private boolean isMale;
     private boolean isThoroughbred;
     private int age;
     private Date foalDate;
     private ArrayList<Vaccination> vaccinationsList;
     private ArrayList<HealthRecord> healthRecordsList;
+
+    public HealthInfo() {}
 
     public HealthInfo(boolean isMale) {
       this.isMale = isMale;
@@ -50,6 +52,10 @@ public class Horse {
 
     public ArrayList<HealthRecord> getHealthRecordsList() {
       return healthRecordsList;
+    }
+
+    public void setMale(boolean isMale) {
+      this.isMale = isMale;
     }
 
     public void setThoroughbred(boolean isThoroughbred) {
@@ -105,7 +111,8 @@ public class Horse {
 
   private String horseName; // name of the horse
   private int horseID; // unique ID of the horse
-  private HealthInfo horseHealthInfo; // health information concerning the horse
+  private ArrayList<Client> owner; // owner(s) of the horse
+  private HealthInfo horseHealthInfo = new HealthInfo(); // health information concerning the horse
 
   /**
    * Default constructor for Horse
@@ -125,8 +132,11 @@ public class Horse {
    */
   public Horse(String horseName, boolean isMale) {
     this();
+    if (horseName == null) {
+      throw new IllegalArgumentException("Sorry buddy, you have to input something for the 🐴 name.🙁🙁🙁🙁");
+    }
     this.horseName = horseName;
-    this.horseHealthInfo = new HealthInfo(isMale);
+    this.horseHealthInfo.setMale(isMale);
   }
 
   /**
@@ -145,12 +155,14 @@ public class Horse {
     return this.horseName;
   }
 
+  public ArrayList<Client> getOwner() { return this.owner; }
+
   /**
    * Getter for the horse's Health Info
    * @return the horse's Name
    */
   public HealthInfo getHorseHealthInfo() {
-    return horseHealthInfo;
+    return this.horseHealthInfo;
   }
 
   /**
