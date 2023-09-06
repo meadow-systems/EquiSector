@@ -15,12 +15,9 @@ public class Client {
   private String emailAddress;
   private ArrayList<Note> notes;
   private Date joinDate;
-  private Horse[] horseList;
+  private ArrayList<Horse> horseList;
   private boolean signedRelease;
 
-  // TODO: attributes – name, clientID, address [divided, by, mail, address, components]
-  // phone number (integer with >= 9 sig figs), email address (a valid email address contains an @),
-  // notes, join date
   public Client(String name) {
     if (name == null || name.isEmpty()) {
       //TODO: Implement Exception
@@ -32,6 +29,7 @@ public class Client {
         .limit(1)
         .findFirst()
         .orElseThrow(NoSuchElementException::new);
+    horseList = new ArrayList<>();
   }
 
   public String getName() {
@@ -66,7 +64,7 @@ public class Client {
     return this.joinDate;
   }
 
-  public Horse[] getHorseList() {
+  public ArrayList<Horse> getHorseList() {
     return this.horseList;
   }
 
@@ -114,6 +112,35 @@ public class Client {
     this.notes.add(note);
   }
 
+  public void setJoinDate(Date joinDate) {
+    if (joinDate == null || joinDate.after(new Date())) {
+      //TODO: Implement Exception
+    }
+    this.joinDate = joinDate;
+  }
+
+  public void setSignedRelease(boolean signedRelease) {
+    this.signedRelease = signedRelease;
+  }
+
+  public void addHorse(Horse horse) {
+    if (horse == null) {
+      //TODO: Implement Exception
+    }
+    this.horseList.add(horse);
+  }
+
+  public void removeHorse(int horseID) {
+    if (horseID < 0 || horseID > 10000) {
+      //TODO: Implement Exception
+    }
+    for (int i = 0; i < horseList.size(); i++) {
+      if (horseList.get(i).getHorseID() == horseID) {
+        horseList.remove(i);
+      }
+    }
+  }
+
   public void removeNote(int noteID) {
     for (int i = 0; i < notes.size(); i++) {
       if (notes.get(i).getNoteID() == noteID) {
@@ -128,16 +155,6 @@ public class Client {
       note.setNote(message);
     }
   }
-
-
-
-
-
-
-
-
-
-
 
   public Note fideNote(int noteID) {
     for (int i = 0; i < notes.size(); i++) {

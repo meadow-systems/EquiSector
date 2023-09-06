@@ -30,6 +30,7 @@ public class Horse {
   private final int horseID; // unique ID of the horse
   private ArrayList<Client> owner; // owner(s) of the horse
   private HealthInfo horseHealthInfo; // health information concerning the horse
+  private ArrayList<Client> owners;
 
   /**
    * Default constructor for Horse
@@ -110,6 +111,10 @@ public class Horse {
     return this.horseHealthInfo.healthRecordsList;
   }
 
+  public ArrayList<Client> getOwners() {
+    return this.owners;
+  }
+
   public void setMale(boolean isMale) {
     this.horseHealthInfo.isMale = isMale;
   }
@@ -169,6 +174,24 @@ public class Horse {
       throw new IllegalArgumentException("Sorry buddy, you have to input something for the 🐴 name.🙁🙁🙁🙁");
     }
     this.horseName = horseName;
+  }
+
+  public void addOwner(Client owner) {
+    if (owner == null) {
+      throw new IllegalArgumentException("🍕");
+    }
+    this.owners.add(owner);
+  }
+
+  public void removeOwner(int ownerID) {
+    if (ownerID < 0 || ownerID < 90001 || ownerID > 100000) {
+      //TODO: Implement Exception
+    }
+    for (int i = 0; i < owners.size(); i++) {
+      if (owners.get(i).getClientID() == ownerID) {
+        owners.remove(i);
+      }
+    }
   }
 
   /**
