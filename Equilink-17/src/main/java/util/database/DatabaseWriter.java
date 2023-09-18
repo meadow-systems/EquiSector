@@ -2,23 +2,24 @@ package util.database;
 
 import org.main.*;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class DatabaseWriter {
     /*
     Initialize
     Handle data folder creation and processing to ensure that the files are properly stored
     Needs to create a data folder if it doesn't exist.
     Needs to create a Horses folder, Health Records folder, Vaccinations folder, Notes folder, Client folder, Logs Folder
-     */
-
+    */
     public static void initialize() {
-
     }
 
     /*
     Take in an object, and send it to a private inner method to save for that given type
      */
 
-    public static boolean writeToFile(Object object) {
+    public static boolean save(Object object) {
         throw new UnsupportedOperationException();
     }
 
@@ -44,5 +45,9 @@ public class DatabaseWriter {
 
     public void writeLog() {
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(System.getProperty("user.dir"));
     }
 }
